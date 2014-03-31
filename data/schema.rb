@@ -5,22 +5,20 @@ DB = Sequel.postgres(database: 'street_art')
 DB.extension :pg_array
 DB.extension :pagination
 
-if DB.tables.empty?
-  DB.create_table :reports do
-    primary_key :id
-    String :case_id
-    DateTime :opened_at
-    DateTime :closed_at
-    String :status
-    String :address
-    String :category
-    String :type
-    String :details
-    String :district
-    String :neighborhood
-    Float :lat
-    Float :lon
-  end
+DB.create_table? :reports do
+  primary_key :id
+  String :case_id
+  DateTime :opened_at
+  DateTime :closed_at
+  String :status
+  String :address
+  String :category
+  String :type
+  String :details
+  String :district
+  String :neighborhood
+  Float :lat
+  Float :lon
 
-  DB.add_index :reports, :case_id, unique: true
+  index :case_id, unique: true
 end
