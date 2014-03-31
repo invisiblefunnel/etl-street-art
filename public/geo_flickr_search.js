@@ -7,7 +7,7 @@ var lon;
 
 $('#input').submit(function(e) {
 
-	$('#result').innerHTML = '';
+	document.getElementById('result').innerHTML = '';
 
 	lat = parseFloat($('#lat').val());
 	lon = parseFloat($('#lon').val());
