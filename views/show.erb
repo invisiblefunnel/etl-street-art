@@ -1,4 +1,7 @@
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GMAP_KEY'] %>&sensor=true"></script>
+<script src='http://code.jquery.com/jquery-1.11.0.min.js'></script>
+<script src='flickrapi.js'></script>
+<script src='geo_flickr_search.js'></script>
 <script>
   function initialize() {
     var fenway = new google.maps.LatLng(<%= @report[:lat] %>, <%= @report[:lon] %>);
@@ -17,25 +20,38 @@
     var panorama = new  google.maps.StreetViewPanorama(document.getElementById('pano'),panoramaOptions);
     map.setStreetView(panorama);
   }
+  lat = <%= @report[:lat] %>;
+  lon = <%= @report[:lon] %>;
+  flickr.photos.search({
+    lat: lat,
+    lon: lon,
+    radius: 0.5,
+    radius_units: 'mi',
+    per_page: 12
+  }, function (err, result) {
+    console.log(result);
+    if(err) { throw new Error(err); }
+    var returnedList = result.photos.photo;
+    for (var i = 0; i < returnedList.length; i++) {
+      var photoUrl = 'http://farm' + returnedList[i].farm + '.staticflickr.com/' + returnedList[i].server + '/' + returnedList[i].id + '_' + returnedList[i].secret + '.jpg';
+      console.log(photoUrl);
+
+     var markup = '<div class="col-xs-6 col-md-3"><a href="#" class="thumbnail"><img src="' + photoUrl + '"></a></div>';
+      document.getElementById('result').innerHTML += markup;
+    };
+  });
+
   google.maps.event.addDomListener(window, 'load', initialize);
 </script>
-<div class="container">
-  <% width = 400 %>
-  <% height = 400 %>
-  <div class="row">
-    <div class="col-xs-6">
-      <div id="map-canvas" class="well" style="width: <%= width %>px; height: <%= height %>px"></div>
-    </div>
-    <div class="col-xs-6">
-      <div id="pano" class="well" style="width: <%= width %>px; height: <%= height %>px"></div>
-    </div>
+<% width = 400 %>
+<% height = 400 %>
+<div class="row">
+  <div class="col-xs-6">
+    <div id="map-canvas" class="well" style="width: <%= width %>px; height: <%= height %>px"></div>
   </div>
-  <div class="row">
-    <% (1..12).each do %>
-      <div class="col-xs-6 col-md-3">
-        <a href="#" class="thumbnail">
-        </a>
-      </div>
-    <% end %>
+  <div class="col-xs-6">
+    <div id="pano" class="well" style="width: <%= width %>px; height: <%= height %>px"></div>
   </div>
+</div>
+<div class="row" id="result"></div>
 </div>
