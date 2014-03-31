@@ -34,16 +34,16 @@ class SteetArtImporter < Struct.new(:table, :row)
   def point
     @point ||= begin
       matches = LAT_LON.match(row['Point'])
-      [matches[1], matches[2]]
+      [matches[1].to_f, matches[2].to_f]
     end
   end
 
   def lat
-    point[0].to_f
+    point[0]
   end
 
   def lon
-    point[1].to_f
+    point[1]
   end
 end
 
