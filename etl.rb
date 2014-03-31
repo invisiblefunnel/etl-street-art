@@ -52,5 +52,5 @@ CSV.foreach('./data/Graffiti_SF311_Reports.csv', headers: true) do |row|
   SteetArtImporter.import(DB[:reports], row)
 
   count +=1
-  puts "Imported: #{count}" if count % 100 == 0
+  puts "Imported: #{count}" if count % 1000 == 0
 end
