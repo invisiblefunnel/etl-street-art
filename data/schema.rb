@@ -21,4 +21,6 @@ if DB.tables.empty?
     Float :lat
     Float :lon
   end
+
+  DB.add_index :reports, :case_id, unique: true
 end

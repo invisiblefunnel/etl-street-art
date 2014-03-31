@@ -6,6 +6,8 @@ class SteetArtImporter < Struct.new(:table, :row)
 
   def self.import(table, row)
     new(table, row).import
+  rescue Sequel::UniqueConstraintViolation
+    puts "Duplicate record... skipping"
   end
 
   def import
