@@ -2,6 +2,7 @@ require 'sequel'
 require 'date'
 
 DB = Sequel.postgres(database: 'street_art')
+DB.extension :pg_array
 DB.extension :pagination
 
 if DB.tables.empty?
