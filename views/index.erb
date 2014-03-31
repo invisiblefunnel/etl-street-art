@@ -7,31 +7,17 @@
 <body>
 <table>
   <tr>
-    <th>Case ID</th>
-    <th>Opened At</th>
-    <th>Closed At</th>
     <th>Status</th>
-    <th>Address</th>
     <th>Category</th>
     <th>Type</th>
-    <th>Details</th>
-    <th>District</th>
-    <th>Neighborhood</th>
     <th>Lat</th>
     <th>Lon</th>
   </tr>
   <% @reports.each do |report| %>
   <tr>
-    <th><%= report[:case_id] %></th>
-    <th><%= report[:opened_at] %></th>
-    <th><%= report[:closed_at] %></th>
     <th><%= report[:status] %></th>
-    <th><%= report[:address] %></th>
     <th><%= report[:category] %></th>
     <th><%= report[:type] %></th>
-    <th><%= report[:details] %></th>
-    <th><%= report[:district] %></th>
-    <th><%= report[:neighborhood] %></th>
     <th><%= report[:lat] %></th>
     <th><%= report[:lon] %></th>
   </tr>
