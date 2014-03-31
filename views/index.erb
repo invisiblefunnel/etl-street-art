@@ -7,6 +7,7 @@
 <body>
 <table>
   <tr>
+    <th>Case ID</th>
     <th>Status</th>
     <th>Category</th>
     <th>Type</th>
@@ -15,6 +16,11 @@
   </tr>
   <% @reports.each do |report| %>
   <tr>
+    <th>
+      <a href="/<%= report[:case_id] %>">
+        <%= report[:case_id] %>
+      </a>
+    </th>
     <th><%= report[:status] %></th>
     <th><%= report[:category] %></th>
     <th><%= report[:type] %></th>
