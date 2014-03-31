@@ -8,3 +8,4 @@ cd etl-street-art
 bundle install
 # before import create a postgresql database named 'street_art'
 rake import
+```
