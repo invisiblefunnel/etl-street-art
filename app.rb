@@ -1,6 +1,8 @@
 require './data/schema.rb'
 require 'sinatra'
 require 'sinatra/reloader' if development?
+require 'dotenv'
+Dotenv.load
 
 get '/' do
   @reports = DB[:reports].paginate(params[:page] || 1, 50)
