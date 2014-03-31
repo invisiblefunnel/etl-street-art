@@ -1,7 +1,7 @@
 require 'sequel'
 require 'date'
 
-DB = Sequel.postgres
+DB = Sequel.postgres(database: 'street_art')
 DB.extension :pg_array
 
 if DB.tables.empty?
