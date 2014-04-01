@@ -1,8 +1,15 @@
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GMAP_KEY'] %>&sensor=true"></script>
 <script src='http://code.jquery.com/jquery-1.11.0.min.js'></script>
 <script src='flickrapi.js'></script>
-<script src='geo_flickr_search.js'></script>
 <script>
+  $(function() {
+    <% if (@report[:type] =~ /^Offensive/) %>
+      $('body').addClass('offensive');
+      setInterval(function() {
+        $('h1').toggle();
+      }, 1000);
+    <% end %>
+  });
   function initialize() {
     var fenway = new google.maps.LatLng(<%= @report[:lat] %>, <%= @report[:lon] %>);
     var mapOptions = {
@@ -20,6 +27,10 @@
     var panorama = new  google.maps.StreetViewPanorama(document.getElementById('pano'),panoramaOptions);
     map.setStreetView(panorama);
   }
+
+  var flickr = new Flickr({
+    api_key: '942201e9595f48cd2508799f4e02d210'
+  });
   lat = <%= @report[:lat] %>;
   lon = <%= @report[:lon] %>;
   flickr.photos.search({
@@ -30,14 +41,12 @@
     radius_units: 'mi',
     per_page: 12
   }, function (err, result) {
-    console.log(result);
     if(err) { throw new Error(err); }
     var returnedList = result.photos.photo;
     for (var i = 0; i < returnedList.length; i++) {
       var photoUrl = 'http://farm' + returnedList[i].farm + '.staticflickr.com/' + returnedList[i].server + '/' + returnedList[i].id + '_' + returnedList[i].secret + '.jpg';
-      console.log(photoUrl);
-
-     var markup = '<div class="col-xs-6 col-md-3"><a href="#" class="thumbnail"><img src="' + photoUrl + '"></a></div>';
+      var photoFlickrUrl = "http://www.flickr.com/photos/" + returnedList[i].owner + "/" + returnedList[i].id;
+      var markup = '<div class="col-xs-6 col-md-3"><a href="' + photoFlickrUrl  + '" class="thumbnail"><img src="' + photoUrl + '"></a></div>';
       document.getElementById('result').innerHTML += markup;
     };
   });
@@ -46,6 +55,7 @@
 </script>
 <% width = 400 %>
 <% height = 400 %>
+
 <div class="row">
   <div class="col-xs-6">
     <div id="map-canvas" class="well" style="width: <%= width %>px; height: <%= height %>px"></div>
@@ -54,5 +64,6 @@
     <div id="pano" class="well" style="width: <%= width %>px; height: <%= height %>px"></div>
   </div>
 </div>
+<h1><%= @report[:type] %></h1>
 <div class="row" id="result"></div>
 </div>
