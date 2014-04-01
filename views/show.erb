@@ -23,6 +23,7 @@
   lat = <%= @report[:lat] %>;
   lon = <%= @report[:lon] %>;
   flickr.photos.search({
+    text: 'graffiti',
     lat: lat,
     lon: lon,
     radius: 0.5,
