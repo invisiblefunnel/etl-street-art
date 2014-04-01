@@ -1,7 +1,17 @@
+require 'dotenv';Dotenv.load
 require 'sequel'
 require 'date'
+require 'uri'
 
-DB = Sequel.postgres(database: 'street_art')
+url = URI(ENV.fetch('DATABASE_URL'))
+config = {}
+config[:database] = url.path[1..-1]
+config[:port]     = url.port
+config[:host]     = url.host
+config[:user]     = url.user if url.user
+config[:password] = url.password if url.password
+
+DB = Sequel.postgres(config)
 DB.extension :pg_array
 DB.extension :pagination
 
