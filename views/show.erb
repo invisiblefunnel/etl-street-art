@@ -5,6 +5,9 @@
   $(function() {
     <% if (@report[:type] =~ /^Offensive/) %>
       $('body').addClass('offensive');
+      setInterval(function() {
+        $('h1').toggle();
+      }, 1000);
     <% end %>
   });
   function initialize() {
