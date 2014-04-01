@@ -5,7 +5,7 @@ require 'dotenv'
 Dotenv.load
 
 get '/' do
-  @reports = DB[:reports].paginate(params[:page] || 1, 50)
+  @reports = DB[:reports].paginate(Integer(params[:page] || 1), 50)
   erb :index
 end
 

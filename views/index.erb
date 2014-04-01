@@ -22,3 +22,16 @@
   </tr>
   <% end %>
 </table>
+
+<ul class="pagination">
+  <% if !@reports.first_page? %>
+  <li>
+    <a href="/?page=<%= @reports.prev_page %>">Previous</a>
+  </li>
+  <% end %>
+  <% if !@reports.last_page? %>
+  <li>
+    <a href="/?page=<%= @reports.next_page %>">Next</a>
+  </li>
+  <% end %>
+</ul>
